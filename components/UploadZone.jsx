@@ -4,19 +4,37 @@ import { useRef, useState } from 'react';
 
 export default function UploadZone({ onUpload, isLoading }) {
   const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const handleFile = async (file) => {
-    if (!file || file.type !== 'application/pdf') {
-      alert('Please upload a PDF file.');
+    if (!file) return;
+
+    const allowed = [
+      'application/pdf',
+      'text/plain',
+      'text/markdown',
+      'text/csv',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.ms-powerpoint',
+    ];
+
+    const ext = file.name.split('.').pop().toLowerCase();
+    const allowedExts = ['pdf','txt','md','csv','docx','xlsx','xls','pptx','ppt'];
+
+    if (!allowedExts.includes(ext)) {
+      alert('Unsupported file type. Please upload PDF, Word, Excel, PowerPoint, TXT, CSV, or Markdown.');
       return;
     }
+
     onUpload(file);
   };
 
   return (
     <div
-      onClick={() => inputRef.current?.click()}
+      onClick={() => fileInputRef.current?.click()}
       onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
       onDragLeave={() => setDragOver(false)}
       onDrop={(e) => {
@@ -31,19 +49,29 @@ export default function UploadZone({ onUpload, isLoading }) {
       }`}
     >
       <input
-        ref={inputRef}
+        ref={fileInputRef}
         type="file"
-        accept=".pdf"
+        accept=".pdf,.txt,.md,.csv,.docx,.xlsx,.xls,.pptx,.ppt"
         className="hidden"
         onChange={(e) => handleFile(e.target.files[0])}
       />
+
       <div className="text-5xl mb-4">📄</div>
+
       <p className="text-xl font-semibold text-gray-700 mb-2">
-        {isLoading ? 'Reading your document...' : 'Drop your PDF here'}
+        {isLoading ? 'Reading your document...' : 'Drop your file here'}
       </p>
-      <p className="text-gray-400 text-sm">
-        {isLoading ? 'Extracting text and building index...' : 'or click to browse — any PDF up to 10MB'}
+
+      <p className="text-gray-400 text-sm mb-1">
+        {isLoading
+          ? 'Extracting text and building index...'
+          : 'or click to browse'}
       </p>
+
+      <p className="text-gray-300 text-xs">
+        PDF · Word · Excel · PowerPoint · TXT · CSV · Markdown
+      </p>
+
       {isLoading && (
         <div className="mt-6 flex justify-center">
           <div className="w-8 h-8 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin" />

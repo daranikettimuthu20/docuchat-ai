@@ -1,6 +1,5 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['unpdf'],
+  serverExternalPackages: ['unpdf', 'mammoth', 'xlsx', 'officeparser'],
 };
 
 module.exports = nextConfig;
