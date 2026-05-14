@@ -150,11 +150,11 @@ export default function Home() {
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-4xl font-bold text-gray-900 mb-3">
-                Chat with any PDF
-              </h2>
-              <p className="text-gray-500 text-lg">
-                Upload a document. Ask questions. Get instant answers.
-              </p>
+  Chat with any Document
+</h2>
+<p className="text-gray-500 text-lg">
+  Upload PDF, Word, Excel, PowerPoint, CSV or Markdown — ask questions, get instant answers.
+</p>
             </div>
 
             <UploadZone onUpload={handleUpload} isLoading={isParsing} />
