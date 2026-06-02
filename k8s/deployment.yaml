@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: docuchat
-          image: docuchat-ai:local
-          imagePullPolicy: Never
+          image: ghcr.io/daranikettimuthu20/docuchat-ai:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           env:

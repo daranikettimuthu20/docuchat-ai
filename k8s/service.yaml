@@ -6,7 +6,7 @@ metadata:
   labels:
     app: docuchat
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: docuchat
   ports:
